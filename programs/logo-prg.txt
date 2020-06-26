@@ -1,0 +1,113 @@
+pour recursif :x :n
+  si :n=1
+    [donne "r :x]
+    [donne "r :x*recursif(:x (:n-1))]
+  rend :r
+fin
+
+av recursif(3 3)
+
+pour somme :a :b
+  donne "c :a+:b
+  rend :c
+fin
+
+pour calcul :x :a :b
+  donne "y :x*somme(:a :b)
+  rend :y
+fin
+
+av calcul(2 3 4)
+
+donne "n 2
+si :n=2
+	[ av 100 ]
+	[ av 50 ]
+
+// Fleur
+
+pour qcercle
+repete 45[av 2 td 2] fin
+pour petale
+repete 2 [ qcercle() td 90 ] fin
+pour fleur
+repete 10 [ petale() td 360/10 ] fin
+pour plante
+fcc 1 0 0
+fleur()
+fcc 0 1 0
+re 130 petale() re 70
+fin
+
+lc
+av 200
+bc
+plante()
+
+# Triangle sepinski
+
+pour triangle :l
+	repete 3 [
+		av :l/2
+		store
+		av :l/2
+		td 120
+	]
+fin
+
+pour serp :nb :l
+	si :nb > 0 [
+		triangle(:l)
+		fcc hasard(1) hasard(1) hasard(1)
+		repete 3 [
+			lc
+			move
+			bc
+			serp(:nb-1 :l/2)
+		]
+	]
+fin
+
+serp(6 300)
+
+// Lattice
+
+pour skip :size
+lc av (:size * 1.5) bc
+fin
+
+pour parallel :size
+repete 2 [
+fcc hasard 1 hasard 1 hasard 1
+av :size
+td 120
+av :size / 2
+td 60
+]
+fin
+
+pour tri :size
+repete 3 [parallel(:size) td 120]
+fin
+
+pour return :size :length
+repete :length [tri(:size) tg 60 skip(:size) td 60]
+tri(:size)
+fin
+
+pour along :size :length
+repete :length [tri(:size) td 120 skip(:size) tg 120]
+tri(:size)
+fin
+
+pour pattern :size :length
+along(:size :length)
+skip(:size) return(:size :length) skip(:size)
+fin
+
+pour lattice :size :length :depth
+lc fpos 100 75 td 30 bc
+repete :depth [pattern(:size :length)]
+fin
+
+lattice(30 8 4)
